@@ -8,13 +8,23 @@
     display: flex;
     align-items: center;
     padding-inline: 0.5rem;
-    transition: border-color 100ms ease;
+    transition: border-color 100ms ease, color 100ms ease;
+    background: none;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    font: inherit;
+    color: var(--color-dim);
+    cursor: pointer;
+    text-decoration: none;
 }
 .nav .nav__tab.router-link-active {
-    border-color: var(--color-on-primary);
+    border-color: var(--color-accent);
+    color: var(--color-on-primary);
 }
 .nav .nav__tab:hover {
-    border-color: var(--color-on-primary);
+    border-color: rgba(255, 255, 255, 0.2);
+    color: var(--color-on-primary);
 }
 .nav .nav__actions {
     flex: 1;
@@ -35,20 +45,24 @@
     transition: background-color 100ms ease;
 }
 .nav .nav__actions .nav__icon:hover {
-    background-color: rgba(255, 255, 255, 0.2);
+    background-color: rgba(255, 255, 255, 0.08);
 }
 .nav .nav__actions .nav__icon img {
     height: 1.5rem;
 }
 .nav .nav__actions .nav__cta {
     margin-left: 1rem;
-    padding: 1rem;
-    background-color: var(--color-on-primary);
-    color: var(--color-primary);
+    padding: 0.75rem 1.25rem;
+    background-color: var(--color-accent);
+    color: #ffffff;
     border-radius: 0.5rem;
-    box-shadow: 0 1px 0.5rem 0 rgba(0, 0, 102, 0.5);
-    transition: transform 100ms ease;
+    box-shadow: 0 1px 0.5rem 0 rgba(0, 0, 0, 0.5);
+    transition: transform 100ms ease, background-color 100ms ease;
+    border: none;
+    font: inherit;
+    cursor: pointer;
 }
 .nav .nav__actions .nav__cta:hover:not(:active) {
     transform: translateY(-2px);
+    background-color: var(--color-accent-hover);
 }
