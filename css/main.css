@@ -1,26 +1,19 @@
 :root {
-    --color-background: white;
-    --color-on-background: black;
-    --color-background-hover: #eee;
-    --color-on-background-hover: black;
-    --color-primary: #0066ff;
-    --color-on-primary: white;
-    --color-error: #de0000;
-    --color-on-error: white;
-}
-
-main.dark,
-header.dark {
-    color-scheme: dark;
-    --color-background: #1c1b1f;
-    --color-on-background: white;
-    --color-background-hover: #27262c;
-    --color-on-background-hover: white;
-    --color-primary: #283593;
-    --color-primary-disabled: #1f213c;
-    --color-on-primary: white;
-    --color-error: #de0000;
-    --color-on-error: white;
+    --color-background:         #181818;
+    --color-on-background:      #e2e2e2;
+    --color-background-hover:   #212121;
+    --color-on-background-hover:#ffffff;
+    --color-primary:            #111111;
+    --color-on-primary:         #e2e2e2;
+    --color-error:              #9e3a3a;
+    --color-on-error:           #ffffff;
+    --color-accent:             #e05c3a;
+    --color-accent-hover:       #c94f30;
+    --color-border:             #272727;
+    --color-border-subtle:      #1e1e1e;
+    --color-rated:              #4e9c65;
+    --color-unrated:            #9e8a3a;
+    --color-dim:                #555555;
 }
 
 html,
@@ -39,10 +32,7 @@ main {
     background-color: var(--color-background);
     color: var(--color-on-background);
     display: grid;
-    grid-template-columns: minmax(16rem, 1fr) minmax(16rem, 2fr) minmax(
-            16em,
-            1fr
-        );
+    grid-template-columns: minmax(16rem, 1fr) minmax(16rem, 2fr) minmax(16rem, 1fr);
     column-gap: 2rem;
 }
 
@@ -52,6 +42,8 @@ header {
     height: 4rem;
     background-color: var(--color-primary);
     color: var(--color-on-primary);
+    border-bottom: 1px solid var(--color-border);
+    flex-shrink: 0;
 }
 @media screen and (min-width: 1366px) {
     header {
@@ -65,6 +57,10 @@ header .logo {
     display: flex;
     align-items: flex-end;
     gap: 1rem;
+    padding-inline: 1rem;
+}
+header .logo h2 span {
+    color: var(--color-accent);
 }
 header .nav {
     flex: 1;
@@ -80,12 +76,19 @@ main {
 main > div {
     overflow-y: auto;
 }
+main > div::-webkit-scrollbar {
+    width: 3px;
+}
+main > div::-webkit-scrollbar-thumb {
+    background: var(--color-border);
+}
 
 .spinner {
     display: flex;
     align-items: center;
     justify-content: center;
     grid-column: span 3;
+    color: var(--color-dim);
 }
 
 input[type="checkbox"] {
@@ -93,4 +96,5 @@ input[type="checkbox"] {
     width: 1.25rem;
     cursor: pointer;
     margin: 0;
+    accent-color: var(--color-accent);
 }
