@@ -160,16 +160,6 @@ input[type="number"],
     font-weight: 500;
     -webkit-font-smoothing: subpixel-antialiased;
 }
-.type-label-lg::before {
-    content: "";
-    margin-bottom: -0.2583333333em;
-    display: table;
-}
-.type-label-lg::after {
-    content: "";
-    margin-top: -0.2083333333em;
-    display: table;
-}
 
 .type-label-md {
     font-family: "Lexend Deca", sans-serif;
@@ -178,16 +168,6 @@ input[type="number"],
     font-weight: 500;
     -webkit-font-smoothing: subpixel-antialiased;
 }
-.type-label-md::before {
-    content: "";
-    margin-bottom: -0.305em;
-    display: table;
-}
-.type-label-md::after {
-    content: "";
-    margin-top: -0.255em;
-    display: table;
-}
 
 .type-label-sm {
     font-family: "Lexend Deca", sans-serif;
@@ -195,16 +175,6 @@ input[type="number"],
     line-height: 12px;
     font-weight: 500;
     -webkit-font-smoothing: subpixel-antialiased;
-}
-.type-label-sm::before {
-    content: "";
-    margin-bottom: -0.2em;
-    display: table;
-}
-.type-label-sm::after {
-    content: "";
-    margin-top: -0.15em;
-    display: table;
 }
 
 p,
