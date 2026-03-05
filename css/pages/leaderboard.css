@@ -21,6 +21,8 @@
     padding: 1rem;
     background-color: var(--color-error);
     color: var(--color-on-error);
+    border-radius: 0.5rem;
+    margin-bottom: 1rem;
 }
 .page-leaderboard .board-container,
 .page-leaderboard .player-container {
@@ -30,6 +32,8 @@
 .page-leaderboard .board-container {
     padding-inline: 1rem;
 }
+
+/* board table */
 .page-leaderboard .board {
     table-layout: auto;
     display: block;
@@ -38,10 +42,12 @@
 .page-leaderboard .board .rank {
     padding-block: 1rem;
     text-align: end;
+    color: var(--color-dim);
 }
 .page-leaderboard .board .total {
     padding: 1rem;
     text-align: end;
+    color: var(--color-dim);
 }
 .page-leaderboard .board .user {
     width: 100%;
@@ -55,16 +61,20 @@
     text-align: start;
     word-break: normal;
     overflow-wrap: anywhere;
+    width: 100%;
+    cursor: pointer;
+    transition: background-color 100ms ease, color 100ms ease;
 }
 .page-leaderboard .board .user button:hover {
     background-color: var(--color-background-hover);
     color: var(--color-on-background-hover);
-    cursor: pointer;
 }
 .page-leaderboard .board .user.active button {
-    background-color: var(--color-primary);
-    color: var(--color-on-primary);
+    background-color: var(--color-accent);
+    color: #ffffff;
 }
+
+/* player panel */
 .page-leaderboard .player {
     display: flex;
     flex-direction: column;
@@ -80,10 +90,17 @@
 .page-leaderboard .player .table p,
 .page-leaderboard .player .table a {
     padding-block: 1rem;
+    border-bottom: 1px solid var(--color-border-subtle);
+    display: block;
+}
+.page-leaderboard .player .table tr:last-child td p,
+.page-leaderboard .player .table tr:last-child td a {
+    border-bottom: none;
 }
 .page-leaderboard .player .table .rank p,
 .page-leaderboard .player .table .score p {
     text-align: end;
+    color: var(--color-dim);
 }
 .page-leaderboard .player .table .level {
     width: 100%;
