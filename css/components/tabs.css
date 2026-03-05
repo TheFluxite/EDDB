@@ -2,15 +2,16 @@
     display: flex;
 }
 
-.tabs .tab{
+.tabs .tab {
     border: none;
     cursor: pointer;
     font: inherit;
     padding: 1rem;
     margin: 0;
     background-color: transparent;
-    color: var(--color-on-background);
+    color: var(--color-dim);
     border-bottom: 3px solid transparent;
+    transition: color 100ms ease, background-color 100ms ease, border-color 100ms ease;
 }
 
 .tabs .tab:first-child {
@@ -21,10 +22,12 @@
     border-top-right-radius: 0.5rem;
 }
 
-.tabs .tab.selected{
-    border-bottom: 3px solid var(--color-on-background);
+.tabs .tab.selected {
+    border-bottom: 3px solid var(--color-accent);
+    color: var(--color-on-background);
 }
 
-.tabs .tab:hover{
+.tabs .tab:hover {
     background-color: var(--color-background-hover);
+    color: var(--color-on-background);
 }
