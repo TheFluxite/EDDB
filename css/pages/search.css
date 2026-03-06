@@ -1,0 +1,29 @@
+.search-container {
+    padding: 1rem 0 0.75rem;
+    position: sticky;
+    top: 0;
+    background-color: var(--color-background);
+    z-index: 1;
+}
+
+.search-input {
+    width: 100%;
+    padding: 0.65rem 1rem;
+    background-color: var(--color-primary);
+    border: 1px solid var(--color-border);
+    border-radius: 0.5rem;
+    color: var(--color-on-background);
+    font: inherit;
+    font-size: 14.2857142857px;
+    transition: border-color 150ms ease;
+    outline: none;
+    box-sizing: border-box;
+}
+
+.search-input::placeholder {
+    color: var(--color-dim);
+}
+
+.search-input:focus {
+    border-color: var(--color-accent);
+}
