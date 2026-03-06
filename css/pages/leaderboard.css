@@ -108,3 +108,50 @@
 .page-leaderboard .player .table a:hover {
     text-decoration: underline;
 }
+
+/* player header row with share button */
+.page-leaderboard .player .player-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 1rem;
+}
+
+/* share button */
+.page-leaderboard .player .share-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.55rem 1rem;
+    background-color: var(--color-background-hover);
+    color: var(--color-on-background);
+    border: 1px solid var(--color-border);
+    border-radius: 0.5rem;
+    cursor: pointer;
+    font: inherit;
+    font-size: 14px;
+    font-weight: 600;
+    white-space: nowrap;
+    flex-shrink: 0;
+    transition: background-color 120ms ease, color 120ms ease, border-color 120ms ease;
+}
+.page-leaderboard .player .share-btn span {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+}
+.page-leaderboard .player .share-btn svg {
+    width: 15px;
+    height: 15px;
+    flex-shrink: 0;
+}
+.page-leaderboard .player .share-btn:hover {
+    background-color: var(--color-accent);
+    border-color: var(--color-accent);
+    color: #fff;
+}
+.page-leaderboard .player .share-btn.copied {
+    background-color: #4e9c65;
+    border-color: #4e9c65;
+    color: #fff;
+}
