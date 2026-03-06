@@ -1,0 +1,24 @@
+{
+    "id": 92362284,
+    "name": "La Llorona",
+    "author": "CherryTeam",
+    "creators": ["linus02, qMystic, curxe, guleshelt, CuaeR, TheShoot, AppleCr, DiamondSkull, endevvor, Yoonsrdynamix, matty2003, Sauzzeth, hyp3rlink, Convie, Bli, voltex, SmitN"],
+    "verifier": "Nexus",
+    "verification": "https://www.youtube.com/watch?v=VkCtDzApuik",
+    "percentToQualify": 66,
+    "password": "No Copy",
+    "records": [
+        {
+            "user": "† 𓆩Lexy𓆪 †",
+            "link": "https://www.youtube.com/watch?v=WnPNrQp-sdc&t",
+            "percent": 100,
+            "hz": 480
+        },
+        {
+            "user": "FilipProThings",
+            "link": "https://www.youtube.com/watch?v=uInIHcNBszI",
+            "percent": 100,
+            "hz": 144
+        }
+    ]
+}

@@ -1,0 +1,18 @@
+{
+    "id": 93490967,
+    "name": "Electric Forest",
+    "author": "MothEye",
+    "creators": ["MothEye"],
+    "verifier": "swiborg",
+    "verification": "https://www.youtube.com/watch?v=oy6GCLqdj1o",
+    "percentToQualify": 66,
+    "password": "No Copy",
+    "records": [
+        {
+            "user": "FilipProThings",
+            "link": "https://www.youtube.com/watch?v=1UnE6kA4HYw",
+            "percent": 100,
+            "hz": 144
+        }
+    ]
+}

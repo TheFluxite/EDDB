@@ -1,0 +1,18 @@
+{
+    "id": 85933508,
+    "name": "Lost Love",
+    "author": "TheBlackHell",
+    "creators": ["TheBlackHell"],
+    "verifier": "Aespha",
+    "verification": "https://www.youtube.com/watch?v=KGh4Fe5SmXc",
+    "percentToQualify": 66,
+    "password": "Free Copy",
+    "records": [
+        {
+            "user": "FilipProThings",
+            "link": "https://youtu.be/b_-LBQTaOhc?si=fqdD-0ah0QSQbT2F",
+            "percent": 100,
+            "hz": 144
+        }
+    ]
+}
