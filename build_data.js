@@ -5,8 +5,8 @@
 // a single data/_data.json, which the site loads in one HTTP request
 // instead of 1300+ separate requests.
 
-import { readFileSync, writeFileSync } from 'fs';
-import { join } from 'path';
+const { readFileSync, writeFileSync } = require('fs');
+const { join } = require('path');
 
 const dir = './data';
 const list = JSON.parse(readFileSync(join(dir, '_list.json'), 'utf8'));
