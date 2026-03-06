@@ -10,6 +10,10 @@
     "password": "Free Copy",
     "records": [
         {
+            "user": "Fluxite",
+            "link": "https://www.youtube.com/watch?v=rJzdo4DOcAg",
+            "percent": 100,
+            "hz": 360
         }
     ]
 }
