@@ -1,6 +1,8 @@
 import { fetchList } from '../content.js';
 import { localize } from '../util.js';
 
+// test
+
 import Spinner from '../components/Spinner.js';
 
 export default {
