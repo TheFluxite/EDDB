@@ -46,6 +46,7 @@ data.forEach((level, rank) => {
     });
 
     (level.records || []).forEach(record => {
+        if (!record.user) return;
         const user = Object.keys(scoreMap).find(
             u => u.toLowerCase() === record.user.toLowerCase()
         ) || record.user;
