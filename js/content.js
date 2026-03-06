@@ -1,22 +1,20 @@
 import { round, score } from './score.js';
+import { store } from './main.js';
 
 /**
  * Path to directory containing `_list.json` and all levels
  */
 const dir = '/data';
 
-let cachedList = null;
-let cachedEditors = null;
-
 export async function fetchList() {
-    if (cachedList) return cachedList;
+    if (store.listCache) return store.listCache;
 
     try {
         // Try fetching all levels in one request from _data.json
         const dataResult = await fetch(`${dir}/_data.json`);
         if (dataResult.ok) {
             const data = await dataResult.json();
-            cachedList = data.map((level, rank) => {
+            store.listCache = data.map((level, rank) => {
                 if (!level) return [null, `unknown_${rank}`];
                 return [
                     {
@@ -26,7 +24,7 @@ export async function fetchList() {
                     null,
                 ];
             });
-            return cachedList;
+            return store.listCache;
         }
     } catch {}
 
@@ -64,8 +62,8 @@ export async function fetchList() {
             results.push(...batchResults);
         }
 
-        cachedList = results;
-        return cachedList;
+        store.listCache = results;
+        return store.listCache;
     } catch {
         console.error(`Failed to load list.`);
         return null;
@@ -73,11 +71,11 @@ export async function fetchList() {
 }
 
 export async function fetchEditors() {
-    if (cachedEditors) return cachedEditors;
+    if (store.editorsCache) return store.editorsCache;
     try {
         const editorsResults = await fetch(`${dir}/_editors.json`);
-        cachedEditors = await editorsResults.json();
-        return cachedEditors;
+        store.editorsCache = await editorsResults.json();
+        return store.editorsCache;
     } catch {
         return null;
     }
