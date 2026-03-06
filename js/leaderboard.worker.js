@@ -1,5 +1,5 @@
 // js/leaderboard.worker.js
-// Runs leaderboard score computation in a background thread
+// Runs leaderboard score computation in a background thread. Alright!
 
 function score(rank, percent, minPercent) {
     if (rank > 1500) return 0;
