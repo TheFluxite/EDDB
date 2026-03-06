@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1024" />
+    <title>Player Profile – EDDB</title>
+
+    <!-- These tags are filled dynamically by JS for normal visitors,
+         but the <noscript> / server path handles Discord's scraper.
+         For a static host, we use JS to rewrite them immediately. -->
+    <meta id="og-title"       property="og:title"       content="EDDB – Player Profile" />
+    <meta id="og-description" property="og:description" content="View this player on the Extreme Demon Database leaderboard." />
+    <meta id="og-url"         property="og:url"         content="https://eddb.pages.dev/player" />
+    <meta                     property="og:site_name"   content="Extreme Demon Database" />
+    <meta                     property="og:type"        content="profile" />
+    <meta name="theme-color"  content="#e05c3a" />
+
+    <!-- Twitter card -->
+    <meta name="twitter:card"        content="summary" />
+    <meta id="tw-title"       name="twitter:title"       content="EDDB – Player Profile" />
+    <meta id="tw-description" name="twitter:description" content="View this player on the Extreme Demon Database leaderboard." />
+
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', sans-serif; }
+        body {
+            background: #181818;
+            color: #e2e2e2;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .card {
+            background: #111;
+            border: 1px solid #272727;
+            border-left: 4px solid #e05c3a;
+            border-radius: 8px;
+            padding: 20px 24px;
+            max-width: 420px;
+            width: 90%;
+        }
+        .site-name {
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #e05c3a;
+            margin-bottom: 8px;
+        }
+        .player-name {
+            font-size: 22px;
+            font-weight: 700;
+            color: #ffffff;
+            margin-bottom: 4px;
+        }
+        .rank {
+            font-size: 13px;
+            color: #888;
+            margin-bottom: 16px;
+        }
+        .stats {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+        .stat-box {
+            background: #1a1a1a;
+            border-radius: 6px;
+            padding: 10px 12px;
+        }
+        .stat-label {
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: #555;
+            margin-bottom: 4px;
+        }
+        .stat-value {
+            font-size: 18px;
+            font-weight: 700;
+            color: #e2e2e2;
+        }
+        .hardest {
+            background: #1a1a1a;
+            border-radius: 6px;
+            padding: 10px 12px;
+        }
+        .hardest .stat-label { margin-bottom: 4px; }
+        .hardest .level-name {
+            font-size: 15px;
+            font-weight: 700;
+            color: #e05c3a;
+        }
+        .hardest .level-rank {
+            font-size: 12px;
+            color: #666;
+            margin-top: 2px;
+        }
+        .footer {
+            margin-top: 14px;
+            font-size: 11px;
+            color: #444;
+        }
+        .loading { text-align: center; color: #555; padding: 40px; }
+        .error   { text-align: center; color: #9e3a3a; padding: 40px; }
+    </style>
+</head>
+<body>
+<div id="root">
+    <div class="loading">Loading player data…</div>
+</div>
+
+<script>
+(async () => {
+    const params  = new URLSearchParams(location.search);
+    const user    = params.get('user');
+
+    // Redirect bots / direct visits with no user param back to main site
+    if (!user) {
+        location.href = '/#/leaderboard';
+        return;
+    }
+
+    // ── helpers ──────────────────────────────────────────────────────────────
+    function localize(n) {
+        return Number(n).toLocaleString(undefined, { minimumFractionDigits: 0, maximumFractionDigits: 0 });
+    }
+
+    // ── fetch leaderboard ────────────────────────────────────────────────────
+    let leaderboard = [];
+    try {
+        const res = await fetch('/data/_leaderboard.json');
+        if (!res.ok) throw new Error('HTTP ' + res.status);
+        leaderboard = await res.json();
+    } catch (e) {
+        document.getElementById('root').innerHTML =
+            '<div class="error">Failed to load leaderboard data.</div>';
+        return;
+    }
+
+    const idx   = leaderboard.findIndex(e => e.user.toLowerCase() === user.toLowerCase());
+    const entry = leaderboard[idx];
+
+    if (!idx === -1 || !entry) {
+        document.getElementById('root').innerHTML =
+            '<div class="error">Player not found.</div>';
+        return;
+    }
+
+    // ── compute stats ────────────────────────────────────────────────────────
+    const rank       = idx + 1;
+    const total      = entry.total;
+    const verified   = (entry.verified   || []).length;
+    const completed  = (entry.completed  || []).length;
+    const progressed = (entry.progressed || []).length;
+    const allLevels  = [
+        ...(entry.verified   || []),
+        ...(entry.completed  || []),
+        ...(entry.progressed || []),
+    ].sort((a, b) => a.rank - b.rank);
+    const hardest    = allLevels[0];
+
+    // ── update OG meta for bots that execute JS ───────────────────────────
+    const description = `Rank #${rank} · ${localize(total)} pts · ${verified + completed} completions${hardest ? ` · Hardest: ${hardest.level} (#${hardest.rank})` : ''}`;
+    document.getElementById('og-title').setAttribute('content',       `${entry.user} – EDDB Leaderboard`);
+    document.getElementById('og-description').setAttribute('content', description);
+    document.getElementById('tw-title').setAttribute('content',       `${entry.user} – EDDB Leaderboard`);
+    document.getElementById('tw-description').setAttribute('content', description);
+    document.title = `${entry.user} – EDDB`;
+
+    // ── render card ──────────────────────────────────────────────────────────
+    document.getElementById('root').innerHTML = `
+        <div class="card">
+            <div class="site-name">Extreme Demon Database · Leaderboard</div>
+            <div class="player-name">${entry.user}</div>
+            <div class="rank">Rank #${rank} of ${leaderboard.length}</div>
+            <div class="stats">
+                <div class="stat-box">
+                    <div class="stat-label">Total Score</div>
+                    <div class="stat-value">${localize(total)}</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-label">Completions</div>
+                    <div class="stat-value">${verified + completed}</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-label">Verified</div>
+                    <div class="stat-value">${verified}</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-label">Progressed</div>
+                    <div class="stat-value">${progressed}</div>
+                </div>
+            </div>
+            ${hardest ? `
+            <div class="hardest">
+                <div class="stat-label">Hardest Completion</div>
+                <div class="level-name">${hardest.level}</div>
+                <div class="level-rank">List Rank #${hardest.rank}</div>
+            </div>` : ''}
+            <div class="footer">eddb.pages.dev · View full profile →</div>
+        </div>
+    `;
+
+    // ── after a short delay, redirect to the SPA ─────────────────────────────
+    // (only for humans – bots stop after parsing the page)
+    // We DON'T auto-redirect; this page IS the share target.
+})();
+</script>
+</body>
+</html>
