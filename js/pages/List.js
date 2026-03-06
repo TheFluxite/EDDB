@@ -22,16 +22,29 @@ export default {
         </main>
         <main v-else class="page-list">
             <div class="list-container">
+                <div class="search-container">
+                    <input
+                        class="search-input"
+                        type="text"
+                        v-model="searchQuery"
+                        placeholder="Search levels..."
+                    />
+                </div>
                 <table class="list" v-if="list">
-                    <tr v-for="([level, err], i) in list">
+                    <tr v-for="([level, err], i) in filteredList">
                         <td class="rank">
-                            <p v-if="i + 1 <= 15000" class="type-label-lg">#{{ i + 1 }}</p>
+                            <p v-if="originalIndex(level, err) + 1 <= 15000" class="type-label-lg">#{{ originalIndex(level, err) + 1 }}</p>
                             <p v-else class="type-label-lg">Legacy</p>
                         </td>
-                        <td class="level" :class="{ 'active': selected == i, 'error': !level }">
-                            <button @click="selected = i">
+                        <td class="level" :class="{ 'active': selected == originalIndex(level, err), 'error': !level }">
+                            <button @click="selected = originalIndex(level, err)">
                                 <span class="type-label-lg">{{ level?.name || \`Error (\${err}.json)\` }}</span>
                             </button>
+                        </td>
+                    </tr>
+                    <tr v-if="filteredList.length === 0">
+                        <td colspan="2" style="padding: 1rem; color: var(--color-dim); text-align: center;">
+                            <p class="type-label-lg">No levels found</p>
                         </td>
                     </tr>
                 </table>
@@ -126,11 +139,12 @@ export default {
         selected: 0,
         errors: [],
         roleIconMap,
-        store
+        store,
+        searchQuery: '',
     }),
     computed: {
         level() {
-            return this.list[this.selected][0];
+            return this.list[this.selected]?.[0];
         },
         video() {
             if (!this.level.showcase) {
@@ -141,6 +155,14 @@ export default {
                     ? this.level.showcase
                     : this.level.verification
             );
+        },
+        filteredList() {
+            if (!this.searchQuery.trim()) return this.list;
+            const q = this.searchQuery.trim().toLowerCase();
+            return this.list.filter(([level, err]) => {
+                if (!level) return err?.toLowerCase().includes(q);
+                return level.name?.toLowerCase().includes(q);
+            });
         },
     },
     async mounted() {
@@ -169,6 +191,9 @@ export default {
         score,
         goToLeaderboard(user) {
             this.$router.push({ path: '/leaderboard', query: { user } });
+        },
+        originalIndex(level, err) {
+            return this.list.findIndex(([l, e]) => l === level && e === err);
         },
     },
 };
