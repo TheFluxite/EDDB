@@ -147,8 +147,7 @@ export default {
         sharePlayer() {
             if (!this.entry) return;
 
-            // /player?user=Name  → proper OG embed for Discord
-            const shareUrl = `${location.origin}/leaderboard?user=${encodeURIComponent(this.entry.user)}`;
+            const shareUrl = `${location.origin}/#/leaderboard?user=${encodeURIComponent(this.entry.user)}`;
 
             navigator.clipboard.writeText(shareUrl).then(() => {
                 this.justCopied = true;
