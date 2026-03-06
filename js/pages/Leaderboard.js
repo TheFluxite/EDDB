@@ -44,8 +44,33 @@ export default {
                 </div>
                 <div class="player-container">
                     <div class="player" v-if="entry">
-                        <h1>#{{ selected + 1 }} {{ entry.user }}</h1>
-                        <h3>{{ localize(entry.total) }}</h3>
+                        <div class="player-header">
+                            <div>
+                                <h1>#{{ selected + 1 }} {{ entry.user }}</h1>
+                                <h3>{{ localize(entry.total) }}</h3>
+                            </div>
+                            <button
+                                class="share-btn"
+                                @click="sharePlayer"
+                                :class="{ copied: justCopied }"
+                                title="Copy share link"
+                            >
+                                <span v-if="!justCopied">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/>
+                                        <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/>
+                                        <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/>
+                                    </svg>
+                                    Share
+                                </span>
+                                <span v-else>
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                        <polyline points="20 6 9 17 4 12"/>
+                                    </svg>
+                                    Copied!
+                                </span>
+                            </button>
+                        </div>
                         <h2 v-if="entry.verified && entry.verified.length > 0">Verified ({{ entry.verified.length }})</h2>
                         <table class="table">
                             <tr v-for="score in entry.verified">
@@ -82,6 +107,7 @@ export default {
         errors: [],
         store,
         searchQuery: '',
+        justCopied: false,
     }),
     computed: {
         entry() {
@@ -117,6 +143,29 @@ export default {
         localize,
         originalRank(entry) {
             return this.leaderboard.findIndex(e => e.user === entry.user) + 1;
+        },
+        sharePlayer() {
+            if (!this.entry) return;
+
+            // /player?user=Name  → proper OG embed for Discord
+            const shareUrl = `${location.origin}/player?user=${encodeURIComponent(this.entry.user)}`;
+
+            navigator.clipboard.writeText(shareUrl).then(() => {
+                this.justCopied = true;
+                setTimeout(() => { this.justCopied = false; }, 2000);
+            }).catch(() => {
+                // Fallback for browsers that block clipboard
+                const ta = document.createElement('textarea');
+                ta.value = shareUrl;
+                ta.style.position = 'fixed';
+                ta.style.opacity = '0';
+                document.body.appendChild(ta);
+                ta.select();
+                document.execCommand('copy');
+                document.body.removeChild(ta);
+                this.justCopied = true;
+                setTimeout(() => { this.justCopied = false; }, 2000);
+            });
         },
     },
 };
