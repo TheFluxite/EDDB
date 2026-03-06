@@ -17,13 +17,13 @@ jobs:
         with:
           node-version: 18
 
-      - name: Generate _data.json
+      - name: Generate _data.json and _leaderboard.json
         run: node build_data.js
 
-      - name: Commit and push _data.json
+      - name: Commit and push
         run: |
           git config --global user.name 'github-actions[bot]'
           git config --global user.email 'github-actions[bot]@users.noreply.github.com'
-          git add data/_data.json
-          git diff --cached --quiet || git commit -m 'chore: rebuild _data.json'
+          git add data/_data.json data/_leaderboard.json
+          git diff --cached --quiet || git commit -m 'chore: rebuild data and leaderboard'
           git push origin main
