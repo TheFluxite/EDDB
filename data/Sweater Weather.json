@@ -9,5 +9,12 @@
     "verification": "https://youtu.be/y3Kk0ZvDqUM",
     "percentToQualify": 100,
     "password": "Free Copy",
-    "records": []
+    "records": [
+        {
+            "user": "Fluxite",
+            "percent": 100,
+            "link": "https://www.youtube.com/watch?v=nZqlORLXy3Y",
+            "hz": 360
+        }
+    ]
 }
