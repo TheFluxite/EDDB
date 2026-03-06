@@ -17,18 +17,14 @@ export default {
             <div class="page-leaderboard">
                 <div class="error-container">
                     <p class="error" v-if="err.length > 0">
-                        Leaderboard may be incorrect, as the following levels could not be loaded: {{ err.join(', ') }}
+                        Leaderboard may be incorrect: {{ err.join(', ') }}
                     </p>
                 </div>
                 <div class="board-container">
                     <table class="board">
                         <tr v-for="(ientry, i) in leaderboard">
-                            <td class="rank">
-                                <p class="type-label-lg">#{{ i + 1 }}</p>
-                            </td>
-                            <td class="total">
-                                <p class="type-label-lg">{{ localize(ientry.total) }}</p>
-                            </td>
+                            <td class="rank"><p class="type-label-lg">#{{ i + 1 }}</p></td>
+                            <td class="total"><p class="type-label-lg">{{ localize(ientry.total) }}</p></td>
                             <td class="user" :class="{ 'active': selected == i }">
                                 <button @click="selected = i">
                                     <span class="type-label-lg">{{ ientry.user }}</span>
@@ -71,9 +67,7 @@ export default {
         </main>
     `,
     computed: {
-        entry() {
-            return this.leaderboard[this.selected];
-        },
+        entry() { return this.leaderboard[this.selected]; },
     },
     async mounted() {
         try {
