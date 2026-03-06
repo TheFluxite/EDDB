@@ -1,6 +1,5 @@
 import { store } from "../main.js";
 import { localize } from "../util.js";
-import { fetchLeaderboard } from "../content.js";
 
 import Spinner from "../components/Spinner.js";
 
@@ -14,7 +13,7 @@ export default {
             <div class="page-leaderboard">
                 <div class="error-container">
                     <p class="error" v-if="errors.length > 0">
-                        Leaderboard may be incorrect: {{ errors.join(', ') }}
+                        {{ errors.join(', ') }}
                     </p>
                 </div>
                 <div class="board-container">
@@ -36,7 +35,7 @@ export default {
                                 </button>
                             </td>
                         </tr>
-                        <tr v-if="filteredLeaderboard.length === 0">
+                        <tr v-if="filteredLeaderboard.length === 0 && !errors.length">
                             <td colspan="3" style="padding: 1rem; color: var(--color-dim); text-align: center;">
                                 <p class="type-label-lg">No players found</p>
                             </td>
@@ -47,7 +46,7 @@ export default {
                     <div class="player" v-if="entry">
                         <h1>#{{ selected + 1 }} {{ entry.user }}</h1>
                         <h3>{{ localize(entry.total) }}</h3>
-                        <h2 v-if="entry.verified.length > 0">Verified ({{ entry.verified.length }})</h2>
+                        <h2 v-if="entry.verified && entry.verified.length > 0">Verified ({{ entry.verified.length }})</h2>
                         <table class="table">
                             <tr v-for="score in entry.verified">
                                 <td class="rank"><p>#{{ score.rank }}</p></td>
@@ -55,7 +54,7 @@ export default {
                                 <td class="score"><p>+{{ localize(score.score) }}</p></td>
                             </tr>
                         </table>
-                        <h2 v-if="entry.completed.length > 0">Completed ({{ entry.completed.length }})</h2>
+                        <h2 v-if="entry.completed && entry.completed.length > 0">Completed ({{ entry.completed.length }})</h2>
                         <table class="table">
                             <tr v-for="score in entry.completed">
                                 <td class="rank"><p>#{{ score.rank }}</p></td>
@@ -63,7 +62,7 @@ export default {
                                 <td class="score"><p>+{{ localize(score.score) }}</p></td>
                             </tr>
                         </table>
-                        <h2 v-if="entry.progressed.length > 0">Progressed ({{ entry.progressed.length }})</h2>
+                        <h2 v-if="entry.progressed && entry.progressed.length > 0">Progressed ({{ entry.progressed.length }})</h2>
                         <table class="table">
                             <tr v-for="score in entry.progressed">
                                 <td class="rank"><p>#{{ score.rank }}</p></td>
@@ -97,9 +96,13 @@ export default {
     async mounted() {
         const targetUser = this.$route?.query?.user;
 
-        const [leaderboard, errs] = await fetchLeaderboard();
-        this.leaderboard = leaderboard;
-        this.errors = errs;
+        try {
+            const res = await fetch('/data/_leaderboard.json');
+            if (!res.ok) throw new Error(`HTTP ${res.status}`);
+            this.leaderboard = await res.json();
+        } catch (e) {
+            this.errors = [`Failed to load leaderboard: ${e.message}`];
+        }
 
         if (targetUser) {
             const idx = this.leaderboard.findIndex(
