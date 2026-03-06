@@ -1,14 +1,8 @@
-import { fetchList } from '../content.js';
 import { localize } from '../util.js';
-
-// test
-
 import Spinner from '../components/Spinner.js';
 
 export default {
-    components: {
-        Spinner,
-    },
+    components: { Spinner },
     data: () => ({
         leaderboard: [],
         loading: true,
@@ -47,7 +41,7 @@ export default {
                     <div class="player">
                         <h1>#{{ selected + 1 }} {{ entry.user }}</h1>
                         <h3>{{ entry.total }}</h3>
-                        <h2 v-if="entry.verified.length > 0">Verified ({{ entry.verified.length}})</h2>
+                        <h2 v-if="entry.verified.length > 0">Verified ({{ entry.verified.length }})</h2>
                         <table class="table">
                             <tr v-for="score in entry.verified">
                                 <td class="rank"><p>#{{ score.rank }}</p></td>
@@ -63,7 +57,7 @@ export default {
                                 <td class="score"><p>+{{ localize(score.score) }}</p></td>
                             </tr>
                         </table>
-                        <h2 v-if="entry.progressed.length > 0">Progressed ({{entry.progressed.length}})</h2>
+                        <h2 v-if="entry.progressed.length > 0">Progressed ({{ entry.progressed.length }})</h2>
                         <table class="table">
                             <tr v-for="score in entry.progressed">
                                 <td class="rank"><p>#{{ score.rank }}</p></td>
@@ -82,18 +76,13 @@ export default {
         },
     },
     async mounted() {
-        const list = await fetchList();
-
-        const worker = new Worker('/js/leaderboard.worker.js');
-        worker.postMessage(list);
-        worker.onmessage = (e) => {
-            this.leaderboard = e.data.leaderboard;
-            this.err = e.data.errs;
-            this.loading = false;
-            worker.terminate();
-        };
+        try {
+            const res = await fetch('/data/_leaderboard.json');
+            this.leaderboard = await res.json();
+        } catch {
+            this.err = ['Failed to load leaderboard.'];
+        }
+        this.loading = false;
     },
-    methods: {
-        localize,
-    },
+    methods: { localize },
 };
