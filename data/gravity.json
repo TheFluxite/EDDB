@@ -2,12 +2,20 @@
     "id": 77008332,
     "name": "gravity",
     "author": "Kaza",
-    "creators": ["Kaza, Slayer, IcEDCave"],
+    "creators": [
+        "Kaza, Slayer, IcEDCave"
+    ],
     "verifier": "IcEDCave",
     "verification": "https://www.youtube.com/watch?v=Ba4PkcqiZa4",
     "showcase": "https://www.youtube.com/watch?v=ejLLhW3VG9s",
     "percentToQualify": 66,
     "password": "No Copy",
     "records": [
+        {
+            "user": "Nikzhh",
+            "percent": 100,
+            "link": "https://youtu.be/znnPqoAh9C4",
+            "hz": 360
+        }
     ]
 }
