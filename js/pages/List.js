@@ -74,6 +74,7 @@ export default {
                         </li>
                     </ul>
                     <h2>Records</h2>
+                    <p>Records are sorted by which one was submitted first to the EDDB.</p>
                     <p v-if="selected + 1 <= 400"><strong>{{ level.percentToQualify }}%</strong> or better to qualify</p>
                     <p v-else-if="selected + 1 <= 1500"><strong>100%</strong> or better to qualify</p>
                     <p v-else>This level does not accept new records.</p>
