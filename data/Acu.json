@@ -2,7 +2,9 @@
     "id": 61079355,
     "name": "Acu",
     "author": "neigefeu",
-    "creators": ["neigefeu"],
+    "creators": [
+        "neigefeu"
+    ],
     "verifier": "neigefeu",
     "verification": "https://www.youtube.com/watch?v=z6l74Mkoxm8",
     "showcase": "https://www.youtube.com/watch?v=m46CIrF5Svc",
@@ -13,6 +15,12 @@
             "user": "Fluxite",
             "link": "https://www.youtube.com/watch?v=nLO3UkwoAyM",
             "percent": 100,
+            "hz": 360
+        },
+        {
+            "user": "Nikzhh",
+            "percent": 100,
+            "link": "https://www.youtube.com/watch?v=0w9G-2_YPAE",
             "hz": 360
         }
     ]
